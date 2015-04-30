@@ -1,0 +1,81 @@
+-- This CLP file was created using DB2LOOK Version "9.7" 
+-- Timestamp: 4/13/2013 5:13:02 PM
+-- Database Name: PRIME          
+-- Database Manager Version: DB2/NT Version 9.7.5          
+-- Database Codepage: 1208
+-- Database Collating Sequence is: IDENTITY
+
+
+CONNECT TO PRIME;
+
+------------------------------------
+-- DDL Statements for TABLESPACES --
+------------------------------------
+
+
+CREATE USER TEMPORARY TABLESPACE "SYSTOOLSTMPSPACE" IN DATABASE PARTITION GROUP IBMCATGROUP 
+	 PAGESIZE 4096 MANAGED BY AUTOMATIC STORAGE 
+	 EXTENTSIZE 4
+	 PREFETCHSIZE AUTOMATIC
+	 BUFFERPOOL IBMDEFAULTBP
+	 OVERHEAD 7.500000
+	 TRANSFERRATE 0.060000 
+	 FILE SYSTEM CACHING  
+	 DROPPED TABLE RECOVERY OFF;
+
+
+-- Mimic tablespace
+
+ALTER TABLESPACE SYSCATSPACE
+      PREFETCHSIZE AUTOMATIC
+      OVERHEAD 7.500000
+      NO FILE SYSTEM CACHING 
+      AUTORESIZE YES 
+      TRANSFERRATE 0.060000;
+
+
+ALTER TABLESPACE TEMPSPACE1
+      PREFETCHSIZE AUTOMATIC
+      OVERHEAD 7.500000
+      FILE SYSTEM CACHING 
+      TRANSFERRATE 0.060000;
+
+
+ALTER TABLESPACE USERSPACE1
+      PREFETCHSIZE AUTOMATIC
+      OVERHEAD 7.500000
+      NO FILE SYSTEM CACHING 
+      AUTORESIZE YES 
+      TRANSFERRATE 0.060000;
+
+
+
+
+
+
+
+
+
+
+---------------------------------------
+-- Authorization statement on table space 
+---------------------------------------
+
+ 
+GRANT USE OF TABLESPACE "SYSTOOLSTMPSPACE" TO  PUBLIC   ;
+
+COMMIT WORK;
+
+CONNECT RESET;
+
+TERMINATE;
+
+-- Specified SCHEMA is: FARDEEN
+-- Creating DDL for table(s)
+
+-- Schema name is ignored for the Federated Section
+-- Binding package automatically ... 
+-- Bind is successful
+-- Binding package automatically ... 
+-- Bind is successful
+;

@@ -1,0 +1,80 @@
+<?php
+	session_start();
+	include("includes/connect.php");
+	if(isset($_POST['submit'])){
+		$error= array();
+		//username
+		if(empty($_POST['username'])){
+				$error[]='please enter a username. ';
+		}	else if ( ctype_alnum($_POST['username'])) {
+				$username = $_POST['username'];
+		} 	else{
+			$error[]='Username must consist of letters and numbers only. ';
+		}
+		//email
+		if(empty($_POST['email'])){
+				$error[]='please enter your email. ';
+		}	else if(preg_match("/^([a-zA-Z0-9])+([a-zA-Z0-9\._-])*@([a-zA-Z0-9_-])+([a-zA-Z0-9\._-]+)+$/",$_POST['email'])){
+				$email = mysql_real_escape_string($_POST['email']);
+		} 	else {
+			$error[]='Your e-mail address is invalid';
+		}
+		//password
+		if(empty($_POST['pass1'])){
+			$error[]='please enter a password. ';
+		}	else {
+			if(empty($_POST['pass2'])){
+				$error[]='please enter a  conform password. ';
+				}else{
+					if($_POST['pass2']==$_POST['pass1']){
+						$password = mysql_real_escape_string ($_POST['password']);
+						$pass = md5($password);
+					}else{
+						$error[]='Password Don\'t match ';
+					}
+				}
+				
+		}	
+		//first name
+		if(empty($_POST['fname'])){
+			$error[]='please enter a first name. ';
+		}	else {
+				$fname = preg_replace('#[^a-z]#i','', ($_POST['fname']));
+		}
+		//last name
+		if(empty($_POST['lname'])){
+			$error[]='please enter a lastname. ';
+		}	else {
+				$lname = mpreg_replace('#[^a-z]#i','', ($_POST['fname']));
+		}
+		//phone number
+		if(empty($_POST['phoneno'])){
+			$error[]='please enter a phinenumber. ';
+		}	else {
+				$phoneno = preg_replace('#[^0-9]#i','', ($_POST['phoneno']));
+		}
+		//gender
+		if(empty($_POST['gender'])){
+			$error[]='please select a gender. ';
+		}	else {
+				$gender = preg_replace('#[^a-z]#','', ($_POST['gender']));
+		}
+	echo "ii";
+		if (empty ($error)){
+			$result = mysql_query("SELECT * FROM users WHERE email='$email' or username='$username'") or die ("Could not connect to Data base");
+			if (mysql_num_rows($result)==0){
+				$result2 = mysql_query("INSERT INTO user(id,username,email,password,firstname,lastname,gender,phoneno,avatar) VALUES (``,`$username`,`$email`,`$pass`,`$fname`,`$lname`,`$gender`,`$phoneno`,`0`) ") or die ("Could not connect to Data base");
+					if(!$result2){
+						die('Choud not insert into database');
+					}else
+						header('Location: prompt.php?x=1');
+					}
+			}else{
+				header('Location:promt.php?x=2');
+			}
+		}else{
+			$error_message ='<span class="error">' ;
+			$error_message.="</span> <br/><br/>";
+		}
+	
+?>

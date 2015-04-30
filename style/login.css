@@ -1,0 +1,32 @@
+#register{
+margin: 2px auto;
+padding:2px;
+}
+#label{
+color:#069eed;
+}
+#regheading{
+color:#700bed;
+}
+#loginform > input{
+	position:absolute;
+	left:350px;
+	height:20px;
+	width: 250px;
+	padding:2px;
+	border-radius:7px;
+	-moz-border-radius:7px;
+	-webkit-border-radius:7px;
+}
+#loginform > select {
+	position:absolute;
+	left:350px;
+	padding: 3px;
+	border-radius:7px;
+	-moz-border-radius:7px;
+	-webkit-border-radius:7px;
+}
+.error{
+	background-color:red;
+	color:white;
+}
